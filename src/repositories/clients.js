@@ -20,4 +20,17 @@ const createClient = async (user_id, nome, cpf, email, tel) => {
   return result.rows;
 };
 
-module.exports = { clientVerification, createClient };
+const updateClient = async (user_id, nome, cpf, email) => {
+  const result = await db.query({
+    text: `UPDATE clients SET
+          nome = $1,
+          cpf = $2,
+          email = $3
+          WHERE user_id = $4
+          RETURNING *`,
+    values: [nome, cpf, email, user_id],
+  });
+
+  return result.rows;
+};
+module.exports = { clientVerification, createClient, updateClient };
