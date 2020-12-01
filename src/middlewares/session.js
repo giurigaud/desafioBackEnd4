@@ -6,11 +6,13 @@ require("dotenv").config();
 const verify = async (ctx, next) => {
   // eslint-disable-next-line no-unused-vars
   const { authorization = null } = ctx.headers;
+
   if (authorization) {
     const [, token] = authorization.split(" ");
-    if (token !== "undefined") {
+    if (token) {
       try {
         const verification = await jwt.verify(token, process.env.JWT_SECRET);
+        ctx.tokenData = verification;
       } catch (err) {
         console.log(err);
         return response(ctx, 403, "Ação proibida");

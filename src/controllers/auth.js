@@ -16,7 +16,7 @@ const autenticar = async (ctx) => {
     const comparison = await Password.check(senha, usuario.senha);
     if (comparison) {
       const token = await jwt.sign(
-        { email: usuario.email },
+        { email: usuario.email, id: usuario.id },
         process.env.JWT_SECRET,
         {
           expiresIn: "1h",

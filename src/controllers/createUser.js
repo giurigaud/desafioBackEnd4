@@ -1,6 +1,5 @@
 const response = require("../utils/response");
 const usersDB = require("../repositories/users");
-const { hash } = require("bcryptjs");
 const { encrypt } = require("../utils/password");
 
 const createUser = async (ctx) => {
@@ -19,7 +18,7 @@ const createUser = async (ctx) => {
       message: "Email já cadastrado, por favor, utilize outro!",
     });
   }
-  const senhaEncriptada = awaitencrypt(senha);
+  const senhaEncriptada = await encrypt(senha);
 
   const createUserController = await usersDB.createUser(
     nome,
